@@ -5,9 +5,10 @@ Este documento detalha o processo completo de preparação, instalação e confi
 ---
 
 ## 📋 Pré-requisitos
-- Sistema Operacional: **Ubuntu Server** (ou distribuições baseadas em Debian).
-- Acesso SSH ou terminal local.
-- Privilégios de superusuário (`sudo`).
+
+- **Sistema Operacional:** Ubuntu Server (ou distribuições baseadas em Debian)
+- **Acesso:** SSH ou terminal local
+- **Privilégios:** Superusuário (`sudo`)
 
 ---
 
@@ -15,31 +16,60 @@ Este documento detalha o processo completo de preparação, instalação e confi
 
 Para garantir a versão estável mais recente, utilizamos o script oficial mantido pelo Docker.
 
- Passo a passo:
-1. Baixar o instalador: "curl -fsSL [https://get.docker.com](https://get.docker.com) -o get-docker.sh"
+**Passo a passo:**
 
-2. Executar o script: "sudo sh get-docker.sh"
+```bash
+# Baixar o instalador
+curl -fsSL https://get.docker.com -o get-docker.sh
 
-3. Remover o instalador (limpeza): "rm get-docker.sh"
+# Executar o script
+sudo sh get-docker.sh
+
+# Remover o instalador (opcional)
+rm get-docker.sh
+```
 
 ## 🔑 2. Configuração de Pós-Instalação
 
-Por padrão, o Docker exige privilégios de root. Para rodar comandos sem sudo, adicionamos o usuário ao grupo docker.
+Por padrão, o Docker exige privilégios de root. Para rodar comandos sem `sudo`, adicione seu usuário ao grupo `docker`:
 
-Comandos:
-# Adiciona o usuário atual ao grupo docker
-sudo usermod -aG docker $USER
-**Nota: Para aplicar essa mudança, é necessário fazer logout e login novamente na sessão SSH, ou rodar o comando newgrp docker.**
+```
+# Adiciona o usuário atual ao grupo dockersudo usermod -aG docker $USER
+```
+
+> **Nota:** Para aplicar essa mudança, faça logout e login novamente na sessão SSH, ou rode:
+> 
+> ```
+> newgrp docker
+> ```
+
+----------
 
 ## ✅ 3. Validação do Serviço
 
-1. Verificar versão instalada: "docker --version"
-2. Testar execução de container: "docker run hello-world"
-3. Monitoramento de Processos: Verificamos via "btop" ou "systemctl status docker" se o daemon está ativo e consumindo recursos conforme o esperado.
+```
+# Verificar versão instalada
+docker --version
+
+# Testar execução de container
+docker run hello-world
+
+# Monitoramento do daemon
+systemctl status docker
+# Ou via ferramenta btop
+btop
+```
+
+----------
 
 ## 🛠️ 4. Comandos de Gerenciamento Úteis
 
-1. **Ação:** Iniciar Docker no boot **Comando:** sudo systemctl enable docker
-2. **Ação:** Reiniciar o serviço **Comando:** sudo systemctl restart docker
-3. **Ação:** Listar containers ativos **Comando:** docker ps
-4. **Ação:** Ver consumo de recursos **Comando:** docker stats
+
+
+| Ação| Comando |
+| :---        |    :----:   |
+| Iniciar Docker no boot| sudo systemctl enable docker |
+| Reiniciar o serviço| sudo systemctl restart docker |
+| Listar containers ativos| docker ps |
+| Ver consumo de recursos| docker stats |
+
